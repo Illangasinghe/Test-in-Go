@@ -1,0 +1,4 @@
+version: '3'
+services:
+  sut:
+    image: sut-image

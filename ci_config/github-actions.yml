@@ -1,0 +1,10 @@
+name: Go Test
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run Tests
+      run: ./scripts/run_tests.sh

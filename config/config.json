@@ -1,0 +1,15 @@
+{
+  "db": {
+    "url": "postgres://user:pass@db:5432/test_db?sslmode=disable",
+    "maxOpenConnections": 10,
+    "maxIdleConnections": 5
+  },
+  "api": {
+    "base_url": "http://sut:8080/api",
+    "timeout": 30
+  },
+  "allure": {
+    "enable": true,
+    "results_directory": "./reports/allure-results"
+  }
+}

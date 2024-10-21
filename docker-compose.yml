@@ -1,0 +1,45 @@
+version: '3'
+services:
+  test-framework:
+    build: .
+    container_name: test-in-go-framework
+    depends_on:
+      - db
+      - sut
+    volumes:
+      - .:/app
+    environment:
+      - ENVIRONMENT=dev
+      - DB_URL=postgres://user:pass@db:5432/test_db?sslmode=disable
+    networks:
+      - test-network
+    command: ["./scripts/run_tests.sh"]
+
+  db:
+    image: postgres:latest
+    container_name: test-in-go-db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: test_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - test-network
+
+  sut:
+    image: sut-image
+    container_name: test-in-go-sut
+    ports:
+      - "8080:8080"
+    networks:
+      - test-network
+
+networks:
+  test-network:
+    driver: bridge
+
+volumes:
+  db_data:

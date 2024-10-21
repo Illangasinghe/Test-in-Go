@@ -1,0 +1,6 @@
+stages:
+  - test
+
+job_test:
+  script:
+    - ./scripts/run_tests.sh
