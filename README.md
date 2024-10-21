@@ -20,123 +20,129 @@ The framework has been structured to make it easy to manage, extend, and scale. 
 ```
 test-in-go/
 │
-├── Dockerfile                     # Dockerfile for the test framework
-├── docker-compose.yml             # Docker Compose for managing services (database, SUT, test framework)
-├── go.mod                          # Go modules for dependency management
-├── go.sum                          # Go checksum
-├── README.md                       # Documentation, usage examples, contributing guidelines
-├── LICENSE.md                      # License for public usage
-├── config/                         # Configuration files
-│   ├── config.json                 # Main configuration file for database, API settings, etc.
-│   └── env.go                      # Helper to load environment variables
+├── Dockerfile                           # Dockerfile for building the test framework container
+├── docker-compose.yml                   # Docker Compose configuration to manage services (DB, SUT, test framework)
+├── go.mod                               # Go modules file for dependency management
+├── go.sum                               # Go module dependency checksums
+├── README.md                            # Project documentation, usage examples, and contribution guidelines
+├── LICENSE.md                           # License for public usage
+├── config/                              # Configuration files
+│   ├── config.json                      # Main config file (DB, API settings, etc.)
+│   └── env.go                           # Helper for loading environment variables
 │
-├── features/                       # Gherkin feature files organized by type of message or functionality
-│   ├── inbound/                    # Inbound calls (messages from host)
+├── features/                            # Gherkin feature files, organized by message type/functionality
+│   ├── inbound/                         # Inbound calls (messages from external systems)
 │   │   ├── product_creation.feature
 │   │   ├── stock_update.feature
 │   │   └── order_placement.feature
-│   ├── outbound/                   # Outbound calls (messages from core)
+│   ├── outbound/                        # Outbound calls (messages from core)
 │   │   ├── stock_balance_update.feature
 │   │   └── order_status_update.feature
-│   └── integration_scenarios/      # Complex scenarios (inbound + outbound combined)
+│   └── integration_scenarios/           # Complex scenarios (inbound + outbound combined)
 │       └── product_order_scenario.feature
 │
-├── steps/                          # Step definitions for Gherkin feature files
-│   ├── inbound/                    # Step definitions for inbound features
+├── steps/                               # Step definitions for Gherkin feature files
+│   ├── inbound/                         # Step definitions for inbound features
 │   │   ├── product_steps.go
 │   │   ├── stock_steps.go
 │   │   └── order_steps.go
-│   ├── outbound/                   # Step definitions for outbound features
+│   ├── outbound/                        # Step definitions for outbound features
 │   │   ├── stock_balance_steps.go
 │   │   └── order_status_steps.go
-│   └── integration_scenarios/      # Step definitions for complex integration scenarios
+│   └── integration_scenarios/           # Step definitions for complex integration scenarios
 │       └── product_order_scenario_steps.go
 │
-├── utils/                          # Utility functions
-│   ├── api_helpers/                # API calling functions (HTTP requests)
-│   │   ├── inbound_api_helpers.go  # Helper functions for inbound API calls
-│   │   └── outbound_api_helpers.go # Helper functions for outbound API calls
-│   ├── response_helpers/           # Helpers for storing and retrieving responses
+├── utils/                               # Utility functions
+│   ├── protocol_helpers/                # Protocol dealing helpers
+│   │   ├── soap_helpers.go              # SOAP-specific message generation, sending, and parsing
+│   │   ├── rest_helpers.go              # REST-specific HTTP requests and responses
+│   │   ├── kafka_helpers.go             # Kafka producer and consumer helpers
+│   ├── api_helpers/                     # API calling functions (HTTP requests)
+│   │   ├── inbound_api_helpers.go       # Helper functions for inbound API calls
+│   │   └── outbound_api_helpers.go      # Helper functions for outbound API calls
+│   ├── response_helpers/                # Helpers for storing and retrieving responses
 │   │   ├── inbound_response_helpers.go
 │   │   └── outbound_response_helpers.go
-│   ├── validation_helpers/         # Helpers for validation (response checks, schemas)
+│   ├── validation_helpers/              # Helpers for validation (response checks, schemas)
 │   │   ├── json_schema_validation.go
 │   │   ├── json_field_validation.go
 │   │   ├── xml_schema_validation.go
 │   │   └── xml_field_validation.go
-│   ├── message_helpers/            # Helpers for building dynamic messages
+│   ├── message_helpers/                 # Helpers for building dynamic messages
 │   │   ├── json_message_builder.go
 │   │   └── xml_message_builder.go
-│   └── db_helpers/                 # Database interaction helpers
-│       ├── db_helper.go            # Generic DB helper functions (supports multiple databases)
-│       └── postgres_db_helper.go
+│   ├── logging_helpers/                 # Logging system for API requests, responses, and errors
+│   │   └── logrus_setup.go
+│   └── db_helpers/                      # Database interaction helpers
+│       ├── db_helper.go                 # Generic DB helper functions (supports multiple databases)
+│       └── postgres_db_helper.go        # PostgreSQL-specific helper functions
 │
-├── templates/                      # Directory for JSON/XML templates
-│   ├── inbound/                    # Templates for inbound messages
-│   │   ├── call/                   # Original inbound message inputs to SUT (from host)
+├── templates/                           # Directory for JSON/XML templates
+│   ├── inbound/                         # Templates for inbound messages
+│   │   ├── call/                        # Original inbound message inputs to SUT (from host)
 │   │   │   ├── product_update_template.json
 │   │   │   └── order_placement_template.json
-│   │   └── callout/                # Translated outbound message outputs of SUT (to core)
+│   │   └── callout/                     # Translated outbound message outputs of SUT (to core)
 │   │       ├── product_update_template.json
 │   │       └── order_placement_template.json
-│   └── outbound/                   # Templates for outbound messages
-│       ├── call/                   # Original outbound message inputs to SUT (from core)
+│   └── outbound/                        # Templates for outbound messages
+│       ├── call/                        # Original outbound message inputs to SUT (from core)
 │       │   ├── stock_balance_update_template.json
 │       │   └── order_status_update_template.json
-│       └── callout/                # Translated outbound message outputs of SUT (to host)
+│       └── callout/                     # Translated outbound message outputs of SUT (to host)
 │           ├── stock_balance_update_template.json
 │           └── order_status_update_template.json
 │
-├── data/                           # Sample test data directory
-│   ├── dynamic/                    # Dynamic generic test data for tests
-│   |   ├── dynamic_variables.go    # Dynamic test data
-│   |   └── timebound_variables.go  # Tim-bound variouse test data
-│   ├── static/                     # Static generic test data for tests
-│   |   ├── default_values.go       # Default values
-│   |   └── static_variables.go     # Static test data
-│   ├── inbound/                    # Sample test data for inbound messages
-│   |   ├── sample_product.go       # Static product test data
-│   |   └── sample_order.go         # Static order test data
-│   └── outbound/                   # Sample test data for outbound messages
-│       ├── sample_stock_balance.go # Static stock balance test data
-│       └── sample_order_status.go  # Static order test data
+├── data/                                # Sample test data directory
+│   ├── dynamic/                         # Dynamic generic test data for tests
+│   |   ├── dynamic_variables.go         # Dynamic test data
+│   |   └── timebound_variables.go       # Tim-bound variouse test data
+│   ├── static/                          # Static generic test data for tests
+│   |   ├── default_values.go            # Default values
+│   |   └── static_variables.go          # Static test data
+│   ├── inbound/                         # Sample test data for inbound messages
+│   |   ├── sample_product.go            # Static product test data
+│   |   └── sample_order.go              # Static order test data
+│   └── outbound/                        # Sample test data for outbound messages
+│       ├── sample_stock_balance.go      # Static stock balance test data
+│       └── sample_order_status.go       # Static order test data
 │
-├── db/                             # Database management (database-agnostic)
-│   ├── postgres.go                 # Database interaction module (Primarily PostgreSQL) as an example DB
-│   └── db_interface.go             # Interface for abstracting database methods
+├── db/                                  # Database management (database-agnostic)
+│   ├── postgres.go                      # Database interaction module (Primarily PostgreSQL) as an example DB
+│   └── db_interface.go                  # Interface for abstracting database methods
 │
-├── docs/                           # Documentation directory (public resource focus - Phase 6)
-│   ├── usage.md                    # How to use the framework
-│   ├── contribution.md             # Contribution guide for adding new features, databases, or tests
-│   └── database_setup.md           # Instructions for setting up supported databases (e.g., PostgreSQL, MySQL)
+├── docs/                                # Documentation directory (public resource focus - Phase 6)
+│   ├── usage.md                         # How to use the framework
+│   ├── contribution.md                  # Contribution guide for adding new features, databases, or tests
+│   └── database_setup.md                # Instructions for setting up supported databases (e.g., PostgreSQL, MySQL)
 │
-├── fixtures/                       # Predefined test fixtures for databases
-│   ├── init_db.sql                 # SQL script for initializing db with sample data scripts (if required)
-│   └── clean_db.sql                # SQL script for cleaning database after test execution
+├── fixtures/                            # Predefined test fixtures for databases
+│   ├── init_db.sql                      # SQL script for initializing db with sample data scripts (if required)
+│   └── clean_db.sql                     # SQL script for cleaning database after test execution
 │
-├── reports/                        # Directory for storing test execution results and reports
-│   └── allure-results              # Allure-specific test result reports
+├── reports/                             # Directory for storing test execution results and reports
+│   └── allure-results                   # Allure-specific test result reports
 │
-├── docker/                         # Docker setup for running isolated tests (Phase 2)
-│   ├── Dockerfile                  # The project dockerfile
-│   └── docker-compose.yml          # Docker Compose configuration for linked services (e.g., API and DB)
+├── docker/                              # Docker setup for running isolated tests (Phase 2)
+│   ├── Dockerfile                       # The project dockerfile
+│   └── docker-compose.yml               # Docker Compose configuration for linked services (e.g., API and DB)
 │
-├── scripts/                        # Automation scripts
-│   ├── run_tests.sh                # Script to run the tests (ideal for CI pipelines)
-│   ├── prepare_db.sh               # Script to set up databases (e.g., run init scripts)
-│   ├── run_allure_report.sh        # Script to serve allure reports locally for CLI-based execution
-│   └── run_web_ui.sh               # Script to serve test execution dashboard for web-based execution (Phase 4)
+├── scripts/                             # Automation scripts
+│   ├── run_tests.sh                     # Script to run the tests (ideal for CI pipelines)
+│   ├── prepare_db.sh                    # Script to set up databases (e.g., run init scripts)
+│   ├── run_allure_report.sh             # Script to serve allure reports locally for CLI-based execution
+│   └── run_web_ui.sh                    # Script to serve test execution dashboard for web-based execution (Phase 4)
 │
-├── logs/                           # Logging for better debug (Phase 3)
-│   ├── execution.log               # Stores logs of each test run (stdout, errors)
-│   └── results.log                 # Logs test against timestamp and results on each step on each test execution
+├── logs/                                # Logging for better debug (Phase 3)
+│   ├── execution.log                    # Stores logs of each test run (stdout, errors)
+│   └── results.log                      # Logs test against timestamp and results on each step on each test execution
 │
-├── ci_config/                      # Add configurations for popular CI/CD tools (Phase 5)
-│   ├── jenkinsfile                 # Jenkins pipeline config for running the test framework
-│   ├── gitlab-ci.yml               # GitLab CI configuration file
-│   └── github-actions.yml          # GitHub Actions config
+├── ci_config/                           # Add configurations for popular CI/CD tools (Phase 5)
+│   ├── jenkinsfile                      # Jenkins pipeline config for running the test framework
+│   ├── gitlab-ci.yml                    # GitLab CI configuration file
+│   └── github-actions.yml               # GitHub Actions config
 │
-└── main.go                         # Main entry point for executing the tests
+└── main.go                              # Main entry point for executing the tests
 ```
 
 ## Getting Started
