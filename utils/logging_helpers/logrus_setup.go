@@ -6,17 +6,17 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// SetupLogger sets up the global logger configuration.
+// SetupLogger sets up the logger using Logrus
 func SetupLogger() *logrus.Logger {
 	log := logrus.New()
 
-	// Output to stdout instead of the default stderr
+	// Output logs to stdout
 	log.Out = os.Stdout
 
-	// Set log format to JSON for structured logging
+	// Set the log format to JSON
 	log.SetFormatter(&logrus.JSONFormatter{})
 
-	// Set log level (you can change this based on the environment)
+	// Set the log level (you can set this dynamically based on environment)
 	log.SetLevel(logrus.InfoLevel)
 
 	return log

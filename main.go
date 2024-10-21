@@ -1,56 +1,77 @@
 package main
 
 import (
-	"fmt"
+	// "log"
 	"os"
-
 	"test-in-go/config"
+	"test-in-go/steps/inbound"
+	"test-in-go/utils/db_helpers"
 	"test-in-go/utils/logging_helpers"
 
+	// "testing"
+
 	"github.com/cucumber/godog"
+	// "github.com/ozontech/allure-go/pkg/allure"
+	"github.com/sirupsen/logrus"
 )
 
+var logger *logrus.Logger
+
 func main() {
-	// Set up logging
-	log := logging_helpers.SetupLogger()
 
-	// Load environment variables
-	env := config.GetEnv("ENVIRONMENT", "dev")
-	log.Infof("Running in %s environment", env)
+	// Set up logger
+	logger = logging_helpers.SetupLogger()
 
-	// Define options for the test run
-	opts := godog.Options{
-		Format:    "pretty", // Use a human-readable format
-		Paths:     []string{"./features"},
-		Output:    os.Stdout,
-		Randomize: 0, // Don't randomize the test order
+	// Set up the database connection
+	cfg, err := config.LoadConfig()
+	if err != nil {
+		logger.Fatal("Error loading configuration: ", err)
+		os.Exit(1)
 	}
 
-	// Run Godog tests
-	status := godog.TestSuite{
-		Name:                 "Test-in-Go",
+	// Connect to the database using the configuration
+	err = db_helpers.ConnectPostgres(cfg.DB.URL)
+	if err != nil {
+		logger.Fatal("Failed to connect to the database: ", err)
+		os.Exit(1)
+	}
+	defer db_helpers.ClosePostgres()
+
+	// Run the test suite
+	status := runGodogTests()
+
+	// Exit with appropriate status code
+	if status != 0 {
+		logger.Error("Test suite failed.")
+	} else {
+		logger.Info("Test suite completed successfully.")
+	}
+	os.Exit(status)
+}
+
+func runGodogTests() int {
+	// Godog test options
+	opts := godog.Options{
+		Format: "pretty",
+		Paths:  []string{"./features/inbound/product_creation.feature"},
+		Output: os.Stdout,
+		Strict: true,
+	}
+
+	// Run the test suite and return the status
+	return godog.TestSuite{
+		Name:                 "Product Creation Test",
 		TestSuiteInitializer: InitializeTestSuite,
 		ScenarioInitializer:  InitializeScenario,
 		Options:              &opts,
 	}.Run()
-
-	if status != 0 {
-		log.Error("Test execution failed.")
-	} else {
-		log.Info("Test execution completed successfully.")
-	}
-
-	os.Exit(status)
 }
 
 // InitializeTestSuite - this can be used to prepare data, etc.
 func InitializeTestSuite(ctx *godog.TestSuiteContext) {
-	fmt.Println("Initializing the test suite...")
 	// Any necessary suite-level setup goes here
 }
 
-// InitializeScenario - this runs before each test scenario
 func InitializeScenario(ctx *godog.ScenarioContext) {
-	fmt.Println("Initializing scenario...")
-	// Initialize step definitions here
+	inbound.InitializeProductSteps(ctx)
 }
