@@ -2,6 +2,16 @@
 
 Welcome to **Test in Go** - a Go-based test automation framework. This project is designed to help developers perform API testing, database validations, and Docker integration in a clean, modular, and scalable manner. The framework is built with Go and leverages Gherkin-based Godog for behavior-driven testing, with step definitions linked to BDD steps for improved readability and collaboration.
 
+## Features
+
+- **BDD-driven test automation** using Gherkin feature files and Go step definitions.
+- **Supports multiple protocols** (SOAP, REST, Kafka) for integration testing.
+- **Comprehensive logging** for each test execution (requests, responses, validation steps).
+- **Database interaction** for validation (PostgreSQL supported).
+- **Dockerized environment** for easy setup and execution.
+- **CI/CD Integration** with popular tools like Jenkins, GitLab CI, and GitHub Actions.
+- **Allure reports** for test result visualization, both in CLI and web-based UI.
+
 ## Table of Contents
 
 - [Project Structure](#project-structure)
@@ -21,7 +31,7 @@ The framework has been structured to make it easy to manage, extend, and scale. 
 test-in-go/
 │
 ├── Dockerfile                           # Dockerfile for building the test framework container
-├── docker-compose.yml                   # Docker Compose configuration to manage services (DB, SUT, test framework)
+├── docker-compose.yml                   # Docker Compose config to manage DB, SUT, and test framework
 ├── go.mod                               # Go modules file for dependency management
 ├── go.sum                               # Go module dependency checksums
 ├── README.md                            # Project documentation, usage examples, and contribution guidelines
@@ -129,7 +139,7 @@ test-in-go/
 │
 ├── scripts/                             # Automation scripts
 │   ├── run_tests.sh                     # Script to run the tests (ideal for CI pipelines)
-│   ├── prepare_db.sh                    # Script to set up databases (e.g., run init scripts)
+│   ├── prepare_db.sh                    # Script to set up databases (e.g., run init scripts for data pre-requisites)
 │   ├── run_allure_report.sh             # Script to serve allure reports locally for CLI-based execution
 │   └── run_web_ui.sh                    # Script to serve test execution dashboard for web-based execution (Phase 4)
 │
@@ -185,7 +195,7 @@ To run all tests:
 
 ```bash
 # Run Godog tests
-godog ./tests/features
+godog ./features/inbound/product
 ```
 
 Or, if you prefer using Docker to run the tests in an isolated environment:
@@ -239,6 +249,13 @@ Contributions are welcome! If you have any ideas, improvements, or bugs to repor
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+---
+
+## Next Steps
+
+- Explore the [usage documentation](docs/usage.md) to understand more about how to use this framework for specific protocols.
+- Check out the [contribution guide](docs/contribution.md) to add new features or help improve the project.
 
 ---
 
