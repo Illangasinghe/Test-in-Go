@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"test-in-go/config"
 
+	// "test-in-go/data_helpers"  // Import the data_helpers
+
 	// "test-in-go/utils/data_helpers"
 
 	"github.com/cucumber/godog"
@@ -39,7 +41,7 @@ func iCreateAProductWithTheFollowingDetails(productID, name string) error {
 	}
 
 	// Send a POST request to the product API
-	apiURL := config.GetEnv("API_URL", "http://1916vm04:8900/ws/host/v1") + "/products"
+	apiURL := config.GetEnv("API_URL") + "/products"
 	req, err := http.NewRequest("POST", apiURL, bytes.NewBuffer(productJSON))
 	if err != nil {
 		step.Failed().Finish() // Mark the step as failed if request creation fails

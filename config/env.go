@@ -75,10 +75,25 @@ func LoadConfig() (*Config, error) {
 }
 
 // GetEnv returns the value from the environment variables or from the config
-func GetEnv(key, defaultValue string) string {
-	value := os.Getenv(key)
-	if value == "" {
-		return defaultValue
+func GetEnv(key string) string {
+	// First, check if the value is loaded in config
+	cfg, err := LoadConfig()
+	if err != nil {
+		fmt.Printf("Error loading config: %v\n", err)
+		return ""
 	}
-	return value
+
+	// Check for specific keys in the loaded configuration
+	switch key {
+	case "DB_URL":
+		return cfg.DB.URL
+	case "API_URL":
+		return cfg.API.BaseURL
+	case "ALLURE_RESULTS_DIRECTORY":
+		return cfg.Allure.ResultsDir
+	default:
+		// If not found in config, return from environment variables or empty string if not set
+		value := os.Getenv(key)
+		return value
+	}
 }
