@@ -8,7 +8,7 @@
     "api_scheme": "HTTP",
     "base_url": "appserver:8080/api",
     "api_user": "host",
-    "api_pass": "pass",
+    "api_pass": "smoketest",
     "timeout": 30
   },
   "allure": {

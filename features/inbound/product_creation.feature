@@ -1,4 +1,5 @@
 Feature: Product Creation
-  Scenario: Create a new product
-    Given I create a product with the following details "sample-123" and "Test Description"
-    Then the product should be in the database with name "Test Description"
+
+  Scenario: Create a product using dynamic TestCode
+    Given I create a new testcase with the following test numbers 110, 10, 1
+    Then the product should be created successfully

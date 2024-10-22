@@ -35,6 +35,6 @@ func theProductShouldBeInTheDatabaseWithName(name string) error {
 }
 
 func InitializeProductDBSteps(ctx *godog.ScenarioContext) {
-	ctx.Step(`^I create a product with the following details "([^"]*)" and "([^"]*)"$`, iCreateAProductWithTheFollowingDetails)
+	// ctx.Step(`^I create a product with the following details "([^"]*)" and "([^"]*)"$`, iCreateAProductWithTheFollowingDetails)
 	ctx.Step(`^the product should be in the database with name "([^"]*)"$`, theProductShouldBeInTheDatabaseWithName)
 }

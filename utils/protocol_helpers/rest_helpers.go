@@ -24,6 +24,7 @@ func PostRequest(endpoint string, payload interface{}) (*http.Response, error) {
 
 	// Set headers
 	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("charset", "utf-8")
 	username := config.GetEnv("API_USER")
 	password := config.GetEnv("API_PASS")
 	req.SetBasicAuth(username, password) // Set Basic Authentication
