@@ -32,7 +32,7 @@ func main() {
 	// Connect to the database using the configuration
 	err = db_helpers.ConnectPostgres(cfg.DB.URL)
 	if err != nil {
-		logger.Fatal("Failed to connect to the database: ", err)
+		logger.Fatal("Failed to connect to the database "+config.GetEnv("DB_URL")+" | "+cfg.DB.URL+" due to:", err)
 		os.Exit(1)
 	}
 	defer db_helpers.ClosePostgres()
