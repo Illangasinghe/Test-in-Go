@@ -1,11 +1,10 @@
 package inbound
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
 	"net/http"
-	"test-in-go/config"
+
+	"test-in-go/utils/protocol_helpers"
 
 	// "test-in-go/data_helpers"  // Import the data_helpers
 
@@ -32,37 +31,16 @@ func iCreateAProductWithTheFollowingDetails(productID, name string) error {
 		ProductID: productID,
 		Name:      name,
 	}
-
-	// Convert the product to JSON
-	productJSON, err := json.Marshal(product)
-	if err != nil {
-		step.Failed().Finish() // Mark the step as failed if marshaling fails
-		return fmt.Errorf("failed to marshal product: %v", err)
-	}
-
-	// Send a POST request to the product API
-	apiURL := config.GetEnv("API_URL") + "/products"
-	req, err := http.NewRequest("POST", apiURL, bytes.NewBuffer(productJSON))
-	if err != nil {
-		step.Failed().Finish() // Mark the step as failed if request creation fails
-		return fmt.Errorf("failed to create API request: %v", err)
-	}
-
-	// Set content type to JSON
-	req.Header.Set("Content-Type", "application/json")
-
-	// Execute the API request
-	client := &http.Client{}
-	resp, err := client.Do(req)
+	// Call the helper function with authentication
+	resp, err := protocol_helpers.PostRequest("/products", product)
 	if err != nil {
 		step.Failed().Finish() // Mark the step as failed if API call fails
 		return fmt.Errorf("failed to send API request: %v", err)
 	}
 	defer resp.Body.Close()
 
-	// Validate the response status code
 	if resp.StatusCode != http.StatusCreated {
-		step.Failed().Finish() // Mark the step as failed if response is not 201
+		step.Failed().Finish()
 		return fmt.Errorf("expected status 201, got %d", resp.StatusCode)
 	}
 
