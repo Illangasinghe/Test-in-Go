@@ -11,3 +11,17 @@ const (
 	TRUE_VALUE  = true      // Default true value for test cases
 	FALSE_VALUE = false     // Default false value for test cases
 )
+
+// Default values for test data and constants
+var (
+	TestCode                  = "9999" // Default value for TestCode, to be replaced by actual calculation
+	DefaultLongDescription    = "An example long description. This is too long to be a short description"
+	DefaultImageUrl           = "http://www.example.com/stracciatella.png"
+	DefaultProductClass       = "CONSUMABLE"
+	DefaultProductHierarchyID = "TESTPH1"
+	DefaultTemperatureClass   = "FROZEN"
+	DefaultStorageArea        = "DMS"
+	DefaultSellable           = false
+	DefaultSecure             = true
+	DefaultCatchWeight        = true
+)

@@ -120,3 +120,19 @@ func FutureDateTimeSample() string {
 	futureTime := FutureTimeHours(1)
 	return fmt.Sprintf("%sT%s", futureDate, futureTime)
 }
+
+// GenerateTestCode calculates the TestCode using the formula
+// tcId = ((categoryNumber / 10 - 1) * 500) + ((methodNumber / 10 - 1) * 50) + testcaseNumber
+func GenerateTestCode(categoryNumber, methodNumber, testcaseNumber int) string {
+	tcId := ((categoryNumber/10 - 1) * 500) + ((methodNumber/10 - 1) * 50) + testcaseNumber
+	TestCode = fmt.Sprintf("%04d", tcId) // Ensures the TestCode is always a 4-digit number, Update the global TestCode variable with the calculated value
+	return TestCode
+}
+
+// Example function to show how to use it in test cases
+func ExampleTestCodeUsage() string {
+	categoryNumber := 110
+	methodNumber := 010
+	testcaseNumber := 001
+	return GenerateTestCode(categoryNumber, methodNumber, testcaseNumber)
+}

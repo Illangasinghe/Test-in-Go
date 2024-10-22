@@ -73,6 +73,12 @@ test-in-go/
 │   ├── data_helpers/                    # Dynamic generic test data for tests
 │   │   ├── dynamic_values.go            # Dynamic test data
 │   │   ├── default_values.go            # Default values
+│   │   ├── inbound/                         # Sample test data for inbound messages
+│   │   |   ├── sample_product.go            # Static product test data
+│   │   |   └── sample_order.go              # Static order test data
+│   │   └── outbound/                        # Sample test data for outbound messages
+│   │       ├── sample_stock_balance.go      # Static stock balance test data
+│   │       └── sample_order_status.go       # Static order test data
 │   ├── response_helpers/                # Helpers for storing and retrieving responses
 │   │   ├── inbound_response_helpers.go
 │   │   └── outbound_response_helpers.go
@@ -105,14 +111,6 @@ test-in-go/
 │       └── callout/                     # Translated outbound message outputs of SUT (to host)
 │           ├── stock_balance_update_template.json
 │           └── order_status_update_template.json
-│
-├── data/                                # Sample test data directory
-│   ├── inbound/                         # Sample test data for inbound messages
-│   |   ├── sample_product.go            # Static product test data
-│   |   └── sample_order.go              # Static order test data
-│   └── outbound/                        # Sample test data for outbound messages
-│       ├── sample_stock_balance.go      # Static stock balance test data
-│       └── sample_order_status.go       # Static order test data
 │
 ├── db/                                  # Database management (database-agnostic)
 │   ├── postgres.go                      # Database interaction module (Primarily PostgreSQL) as an example DB
