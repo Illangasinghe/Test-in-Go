@@ -70,6 +70,9 @@ test-in-go/
 │   ├── api_helpers/                     # API calling functions (HTTP requests)
 │   │   ├── inbound_api_helpers.go       # Helper functions for inbound API calls
 │   │   └── outbound_api_helpers.go      # Helper functions for outbound API calls
+│   ├── data_helpers/                    # Dynamic generic test data for tests
+│   │   ├── dynamic_values.go            # Dynamic test data
+│   │   ├── default_values.go            # Default values
 │   ├── response_helpers/                # Helpers for storing and retrieving responses
 │   │   ├── inbound_response_helpers.go
 │   │   └── outbound_response_helpers.go
@@ -104,12 +107,6 @@ test-in-go/
 │           └── order_status_update_template.json
 │
 ├── data/                                # Sample test data directory
-│   ├── dynamic/                         # Dynamic generic test data for tests
-│   |   ├── dynamic_variables.go         # Dynamic test data
-│   |   └── timebound_variables.go       # Tim-bound variouse test data
-│   ├── static/                          # Static generic test data for tests
-│   |   ├── default_values.go            # Default values
-│   |   └── static_variables.go          # Static test data
 │   ├── inbound/                         # Sample test data for inbound messages
 │   |   ├── sample_product.go            # Static product test data
 │   |   └── sample_order.go              # Static order test data
