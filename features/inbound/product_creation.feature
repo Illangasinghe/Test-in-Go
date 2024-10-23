@@ -1,5 +1,6 @@
 Feature: Product Creation
 
   Scenario: Create a product using dynamic TestCode
-    Given I create a new testcase with the following test numbers 110, 10, 1
-    Then the product should be created successfully
+    Given a new testcase with ID "110-010-001"
+    When a product with the description "Test Product" is created
+    Then the product should be created successfully with description "Test Product"

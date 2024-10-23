@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math/big"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -121,18 +122,34 @@ func FutureDateTimeSample() string {
 	return fmt.Sprintf("%sT%s", futureDate, futureTime)
 }
 
-// GenerateTestCode calculates the TestCode using the formula
+// GenerateTestCode generates a 4-digit test code based on a string in the format "110-010-001"
 // tcId = ((categoryNumber / 10 - 1) * 500) + ((methodNumber / 10 - 1) * 50) + testcaseNumber
-func GenerateTestCode(categoryNumber, methodNumber, testcaseNumber int) string {
-	tcId := ((categoryNumber/10 - 1) * 500) + ((methodNumber/10 - 1) * 50) + testcaseNumber
-	TestCode = fmt.Sprintf("%04d", tcId) // Ensures the TestCode is always a 4-digit number, Update the global TestCode variable with the calculated value
-	return TestCode
-}
+func GenerateTestCode(testCodeString string) error {
+	// Split the input string by the '-' delimiter
+	parts := strings.Split(testCodeString, "-")
+	if len(parts) != 3 {
+		return fmt.Errorf("invalid test code format: %s", testCodeString)
+	}
 
-// Example function to show how to use it in test cases
-func ExampleTestCodeUsage() string {
-	categoryNumber := 110
-	methodNumber := 010
-	testcaseNumber := 001
-	return GenerateTestCode(categoryNumber, methodNumber, testcaseNumber)
+	// Convert each part to an integer
+	categoryNumber, err := strconv.Atoi(parts[0])
+	if err != nil {
+		return fmt.Errorf("invalid category number: %s", parts[0])
+	}
+
+	methodNumber, err := strconv.Atoi(parts[1])
+	if err != nil {
+		return fmt.Errorf("invalid method number: %s", parts[1])
+	}
+
+	testcaseNumber, err := strconv.Atoi(parts[2])
+	if err != nil {
+		return fmt.Errorf("invalid testcase number: %s", parts[2])
+	}
+
+	// Calculate the test code as before
+	tcId := ((categoryNumber/10 - 1) * 500) + ((methodNumber/10 - 1) * 50) + testcaseNumber
+	TestCode = fmt.Sprintf("%04d", tcId) // Ensures the TestCode is always a 4-digit number, and updates the global TestCode variable
+
+	return nil
 }

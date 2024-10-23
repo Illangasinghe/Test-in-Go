@@ -2,7 +2,7 @@ package inbound
 
 import (
 	"fmt"
-	"test-in-go/db"
+	"test-in-go/utils/db_helpers"
 
 	"github.com/cucumber/godog"
 )
@@ -12,7 +12,7 @@ var createdProductIDDC string
 func iCreateAProductOnDbWithTheFollowingDetails(productID, name string) error {
 	// Insert product into the database
 	query := "INSERT INTO product (productid, productlevel, parentid, parentlevel, longdescription) VALUES ($1, 'PRD', 'LOREWI', 'PH1', $2)"
-	_, err := db.DB.Exec(query, productID, name)
+	_, err := db_helpers.DB.Exec(query, productID, name)
 	if err != nil {
 		return fmt.Errorf("failed to create product: %v", err)
 	}
@@ -24,7 +24,7 @@ func theProductShouldBeInTheDatabaseWithName(name string) error {
 	// Query the database to verify product exists
 	var dbName string
 	query := "SELECT longdescription FROM product WHERE productid = $1"
-	err := db.DB.QueryRow(query, createdProductID).Scan(&dbName)
+	err := db_helpers.DB.QueryRow(query, createdProductID).Scan(&dbName)
 	if err != nil {
 		return fmt.Errorf("could not find product with ID %s: %v", createdProductID, err)
 	}

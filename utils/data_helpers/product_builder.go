@@ -21,9 +21,29 @@ func NewProductBuilder() *ProductBuilder {
 			Barcodes: []Barcode{
 				{Barcode: "421" + TestCode, BarcodeType: "EACH"},
 			},
-			Sellable: DefaultSellable,
-			Secure:   DefaultSecure,
-			SKU:      []SKU{},
+			Sellable:         DefaultSellable,
+			Secure:           DefaultSecure,
+			SKU:              []SKU{},
+			AgeRestriction:   0,
+			CanTaint:         false,
+			CanBeTainted:     false,
+			Hazardous:        "string",
+			Restricted:       "string",
+			FamilyGroup:      "Family Group 1",
+			Catchweight:      true,
+			Loose:            true,
+			PrePick:          false,
+			InStoreBakery:    false,
+			SecurityTagged:   false,
+			GoodsNotReady:    false,
+			MadeToOrder:      false,
+			Counter:          false,
+			Organic:          true,
+			VirtualStock:     false,
+			AlwaysBag:        false,
+			SubstitutionFrom: "DEFAULT",
+			SubstitutionTo:   "DEFAULT",
+			SubstitutionMode: "DEFAULT",
 		},
 	}
 }
@@ -45,12 +65,15 @@ func (b *ProductBuilder) WithSKU(sku SKU) *ProductBuilder {
 	return b
 }
 
-// WithCalculatedTestCode calculates and sets the TestCode based on category, method, and testcase number
-func (b *ProductBuilder) WithCalculatedTestCode(categoryNumber, methodNumber, testcaseNumber int) *ProductBuilder {
-	testCode := GenerateTestCode(categoryNumber, methodNumber, testcaseNumber) // Updates the global TestCode variable
-	b.product.ProductCode = "PRD-" + testCode
-	b.product.ShortDescription = "desc" + testCode
-	b.product.Barcodes[0].Barcode = "421" + testCode
+func (b *ProductBuilder) WithTestCode() *ProductBuilder {
+	b.product.ProductCode = "PRD-" + TestCode
+	b.product.ShortDescription = "desc" + TestCode
+	b.product.Barcodes[0].Barcode = "421" + TestCode
+	return b
+}
+
+func (b *ProductBuilder) WithShortDescription(description string) *ProductBuilder {
+	b.product.ShortDescription = description
 	return b
 }
 
@@ -60,27 +83,48 @@ func (b *ProductBuilder) Build() Product {
 
 func GenerateSKU() SKU {
 	return SKU{
-		SKUId:                 "SKU-" + TestCode,
-		Description:           "Product SKU",
-		UnitOfMeasure:         "EACH",
-		HeightScalar:          50,
-		HeightUnits:           "mm",
-		WidthScalar:           60,
-		WidthUnits:            "mm",
-		DepthScalar:           70,
-		DepthUnits:            "mm",
-		WeightScalar:          100,
-		WeightUnits:           "g",
-		VolumeScalar:          210,
-		VolumeUnits:           "cc",
-		NoOfUnits:             23,
+		SKUId:       "SKU-" + TestCode,
+		Description: "Product SKU",
+		SKUUom: []SKUUom{
+			{
+				UnitOfMeasure: "EACH",
+				Height: ScalarUnit{
+					Scalar: 50,
+					Units:  "MM",
+				},
+				Width: ScalarUnit{
+					Scalar: 60,
+					Units:  "MM",
+				},
+				Depth: ScalarUnit{
+					Scalar: 70,
+					Units:  "MM",
+				},
+				Volume: ScalarUnit{
+					Scalar: 210,
+					Units:  "CC",
+				},
+				Weight: ScalarUnit{
+					Scalar: 100,
+					Units:  "G",
+				},
+				UnitsPerParent: []UnitsPerParent{
+					{
+						UnitOfMeasure: "EACH",
+						NoOfUnits:     23,
+					},
+				},
+			},
+		},
 		SupplierID:            "Gelato Inc",
 		SupplierReference:     "stracciatella 500ml",
 		MinimumLifeOnReceipt:  8,
 		MinimumLifeOnDespatch: 7,
-		RetailPriceCents:      123,
-		RetailPriceCurrency:   "GBP",
-		CountryOfOrigin:       "GBR",
+		RetailPrice: RetailPrice{
+			CentsValue: 123,
+			Currency:   "GBP",
+		},
+		CountryOfOrigin: "GBR",
 		SKUBarcodes: []Barcode{
 			{Barcode: "SKU" + TestCode, BarcodeType: "EACH"},
 		},
@@ -103,7 +147,6 @@ func GenerateProductWithMultipleSKUs() Product {
 		Build()
 }
 
-// GenerateProductWithCustomFields allows flexible construction by passing custom SKUs or descriptions
 func GenerateProductWithCustomFields(longDescription string, skus []SKU) Product {
 	builder := NewProductBuilder()
 
@@ -116,4 +159,14 @@ func GenerateProductWithCustomFields(longDescription string, skus []SKU) Product
 	}
 
 	return builder.Build()
+}
+
+// GenerateProductsRoot generates a Root structure containing multiple products.
+func GenerateProductsRoot() Root {
+	product1 := GenerateProductWithMandatoryFields()
+	product2 := GenerateProductWithMultipleSKUs()
+
+	return Root{
+		Products: []Product{product1, product2},
+	}
 }

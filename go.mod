@@ -6,18 +6,13 @@ toolchain go1.23.2
 
 require (
 	github.com/cucumber/godog v0.14.1
+	github.com/google/uuid v1.3.0
 	github.com/lib/pq v1.10.9
+	github.com/ozontech/allure-go/pkg/allure v0.6.13
 	github.com/sirupsen/logrus v1.9.3
 )
 
-require (
-	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/google/uuid v1.3.0 // indirect
-	github.com/ozontech/allure-go/pkg/allure v0.6.13 // indirect
-	github.com/pkg/errors v0.9.1 // indirect
-	github.com/pmezard/go-difflib v1.0.0 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
-)
+require github.com/pkg/errors v0.9.1 // indirect
 
 require (
 	github.com/cucumber/gherkin/go/v26 v26.2.0 // indirect
@@ -27,8 +22,6 @@ require (
 	github.com/hashicorp/go-memdb v1.3.4 // indirect
 	github.com/hashicorp/go-uuid v1.0.3 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
-	github.com/ozontech/allure-go v0.6.32 // indirect
-	github.com/ozontech/allure-go/pkg/framework v0.6.32
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/testify v1.9.0 // indirect
 	golang.org/x/sys v0.24.0 // indirect
