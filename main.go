@@ -1,12 +1,15 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"os"
 	"test-in-go/config"
 	"test-in-go/steps/inbound"
 	"test-in-go/utils/db_helpers"
 	"test-in-go/utils/logging_helpers"
 	"test-in-go/utils/report_helpers"
+	"test-in-go/webui"
 
 	"github.com/cucumber/godog"
 	"github.com/sirupsen/logrus"
@@ -15,16 +18,12 @@ import (
 var logger *logrus.Logger
 
 func main() {
+	runTestsFlag := flag.Bool("run-tests", false, "Run tests only")
+	webUIFlag := flag.Bool("web-ui", false, "Launch web UI")
+	flag.Parse()
 
 	// Set up logger
 	logger = logging_helpers.SetupLogger()
-
-	// Initialize the pretty report
-	err := report_helpers.InitPrettyReport()
-	if err != nil {
-		logger.Fatal("Error initializing pretty report: ", err)
-		os.Exit(1)
-	}
 
 	// Set up the database connection
 	cfg, err := config.LoadConfig()
@@ -41,22 +40,40 @@ func main() {
 	}
 	defer db_helpers.ClosePostgres()
 
+	// Decide whether to run the web server or the tests
+	if *runTestsFlag {
+		runTestsOnly()
+	} else if *webUIFlag {
+		webui.StartWebServer()
+	} else {
+		fmt.Println("Specify --run-tests to run tests or --web-ui to start the web interface.")
+	}
+}
+
+func runTestsOnly() {
+	// Initialize the pretty report
+	err := report_helpers.InitPrettyReport()
+	if err != nil {
+		logger.Fatal("Error initializing pretty report: ", err)
+		os.Exit(1)
+	}
+
 	// Run the test suite
 	status := runGodogTests()
 
-	// Finalize the report without passing parameters
+	// Finalize the report
 	err = report_helpers.FinalizePrettyReport()
 	if err != nil {
 		logger.Error("Error finalizing the report: ", err)
 	}
 
-	// Exit with appropriate status code
 	if status != 0 {
 		logger.Error("Test suite failed.")
+		os.Exit(1)
 	} else {
 		logger.Info("Test suite completed successfully.")
+		os.Exit(0)
 	}
-	os.Exit(status)
 }
 
 func runGodogTests() int {

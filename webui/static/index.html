@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Runner</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div id="app" class="container">
+        <h1>Test Runner Dashboard</h1>
+        <button x-on:click="runTests">Run Tests</button>
+
+        <div x-text="resultMessage"></div>
+
+        <div class="report">
+            <h2>Test Report</h2>
+            <iframe id="reportFrame" src="/static/pretty-report.txt" width="100%" height="500px"></iframe>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <script>
+        function runTests() {
+            fetch('/api/run-tests', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.querySelector("#app").__x.$data.resultMessage = data.message;
+                document.getElementById("reportFrame").contentWindow.location.reload();
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
