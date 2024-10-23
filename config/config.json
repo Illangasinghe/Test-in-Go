@@ -10,9 +10,5 @@
     "api_user": "host",
     "api_pass": "smoketest",
     "timeout": 30
-  },
-  "allure": {
-    "enable": true,
-    "results_directory": "./reports/allure-results"
   }
 }

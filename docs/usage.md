@@ -42,17 +42,33 @@ Run the tests using the following script:
 ./scripts/run_tests.sh
 ```
 
-This will run the tests using **Godog** and generate an Allure report.
+This will run the tests using **Godog** and generate a **Pretty Report**.
 
-### 5. Viewing Allure Reports
+### 5. Pretty Report
 
-To view the test results in a browser, use the following script:
+Test results are logged in a human-readable format in the `./reports/pretty-report.txt` file. This report includes step-by-step status logs (Passed, Failed, Skipped) and a summary of the scenarios and steps executed.
+
+To manually inspect the report, you can check the file generated after the test run:
 
 ```bash
-./scripts/run_allure_report.sh
+cat ./reports/pretty-report.txt
 ```
 
-The Allure report will be accessible at `http://localhost:4040`.
+### 6. Optional: Web UI Mode
+
+You can also run a web UI to view, execute, and manage your feature files and reports. The web UI can be launched with:
+
+```bash
+go run main.go --web-ui
+```
+
+The web interface provides features such as viewing the feature files, executing tests, and displaying results interactively.
+
+If you prefer to run tests without the web UI (e.g., for CI/CD purposes), simply run:
+
+```bash
+go run main.go --run-tests
+```
 
 ---
 
@@ -62,7 +78,6 @@ You can configure the environment variables as needed:
 
 - **ENVIRONMENT**: The environment in which the tests will run (e.g., `dev`, `staging`).
 - **DB_URL**: The PostgreSQL connection URL.
-- **ALLURE_RESULTS_DIRECTORY**: The directory where Allure stores its test results.
 
 These can be set in your terminal or as part of the `docker-compose.yml` file.
 
@@ -79,6 +94,4 @@ If you encounter problems connecting to the database, ensure the following:
 
 ### 2. Test Failures
 
-Check the logs in `./logs/execution.log` to see detailed error messages for test failures. Additionally, review the Allure report for more detailed insights.
-
----
+Check the logs in `./logs/execution.log` to see detailed error messages for test failures. Review the pretty report at `./reports/pretty-report.txt` for more details.

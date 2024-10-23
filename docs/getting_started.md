@@ -9,7 +9,6 @@ Before you begin, ensure that you have the following installed on your machine:
 - **[Go](https://golang.org/doc/install)** (version 1.18 or above)
 - **[Docker](https://docs.docker.com/get-docker/)** for containerized test environments
 - **[Docker Compose](https://docs.docker.com/compose/install/)** for managing multi-container Docker applications
-- **[Allure](https://docs.qameta.io/allure/#_get_started)** for generating and viewing test reports
 
 ## Installation
 
@@ -86,17 +85,40 @@ This script streamlines the execution process, automatically preparing the envir
 
 ## Viewing Test Reports
 
-The **Test in Go** framework uses **Allure** for generating test reports. Once tests are completed, you can generate and view the reports using the following script:
+The **Test in Go** framework now uses a minimal **pretty reporting tool** that generates human-readable reports. After running tests, the generated report is available in `reports/pretty-report.txt`. To create and view reports, use:
 
 ```bash
-./scripts/run_allure_report.sh
+./scripts/run_report.sh
 ```
 
-This command will serve the Allure report on a local server, allowing you to interactively browse the test results.
+You can choose to serve the report on a local web server with a basic UI.
+
+### Optional Web UI for Reports
+
+If you want to serve the reports with a web interface, you can start the web UI server:
+
+```bash
+go run main.go --web-ui
+```
+
+This web-based UI lets you browse, execute, and view test results interactively.
+
+### Running Without Web UI
+
+For CI/CD pipelines, or when you don't need the web UI, run the framework in "test-only" mode:
+
+```bash
+go run main.go --run-tests
+```
+
+This decoupled approach allows running tests independently of the web interface.
 
 ## Directory Structure Overview
 
-Here’s a brief explanation of the key directories relevant to getting started with **Test in Go**:
+- **config/**: Configuration files (`config.json`) for database and API settings.
+- **features/**: Gherkin feature files for behavior-driven tests.
+- **steps/**: Step definitions linking Gherkin steps to Go code.
+- **utils/**: Helper functions and utilities for testing and data handling.
 
 - **config/**: Holds the configuration files (`config.json`) to manage database connections, API settings, and environment variables.
 - **features/**: Contains Gherkin feature files for behavior-driven tests.
@@ -104,7 +126,8 @@ Here’s a brief explanation of the key directories relevant to getting started 
 - **utils/**: Helper functions, such as protocol-specific utilities, validation helpers, and data generators.
 - **docker/**: Contains Docker configuration files, including `Dockerfile` and `docker-compose.yml`, for setting up the test environment.
 - **scripts/**: Automation scripts to run tests, generate reports, and manage databases.
-- **reports/**: Stores test execution results and Allure reports for easy tracking and visualization.
+- **reports/**: Stores execution results and reports (e.g., `pretty-report.txt`).
+- **webui/**: Optional module for serving the test results on a local web UI.
 
 ## Next Steps
 

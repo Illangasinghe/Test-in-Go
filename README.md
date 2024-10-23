@@ -9,7 +9,7 @@ Welcome to **Test in Go** – a Go-based test automation framework built for sca
 - 🗄️ **Database Validation**: Seamlessly interact with databases (PostgreSQL support) for comprehensive validation.
 - 🐳 **Docker Integration**: Run tests in isolated, containerized environments.
 - 🔧 **CI/CD Friendly**: Integrates with Jenkins, GitLab CI, GitHub Actions, and more.
-- 📊 **Allure Reporting**: Generate detailed visual reports for easy test analysis.
+- 📊 **Simple Reporting**: Generate detailed visual reports for easy test analysis.
 
 ---
 

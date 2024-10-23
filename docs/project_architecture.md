@@ -51,7 +51,7 @@ Configuration files and environment variables make the framework adaptable to di
 
 ### Reporting Layer
 
-- **Allure Reports**: The framework integrates with Allure for detailed visual test reports. Reports are stored in the `reports/` directory and can be served locally or via CI pipelines.
+- **Reports**: The framework bundled with inhouse reporting tool for detailed visual test reports. Reports are stored in the `reports/` directory and can be served locally or via CI pipelines.
 
 ---
 
@@ -67,7 +67,7 @@ Configuration files and environment variables make the framework adaptable to di
 ### Docker and CI/CD Integration
 
 - **Docker**: The framework supports isolated execution using Docker containers.
-- **CI/CD**: Integration with CI tools (Jenkins, GitLab CI, GitHub Actions) allows for automated test execution in pipelines, with results logged and visualized in Allure reports.
+- **CI/CD**: Integration with CI tools (Jenkins, GitLab CI, GitHub Actions) allows for automated test execution in pipelines, with results logged and visualized in reports.
 
 ### Database Interaction
 
@@ -175,7 +175,7 @@ test-in-go/
 │   └── clean_db.sql                     # SQL script for cleaning database after test execution
 │
 ├── reports/                             # Directory for storing test execution results and reports
-│   └── allure-results                   # Allure-specific test result reports
+│   └── pretty-report.txt                # Basic text-based test result reports
 │
 ├── docker/                              # Docker setup for running isolated tests (Phase 2)
 │   ├── Dockerfile                       # The project dockerfile
@@ -184,7 +184,7 @@ test-in-go/
 ├── scripts/                             # Automation scripts
 │   ├── run_tests.sh                     # Script to run the tests (ideal for CI pipelines)
 │   ├── prepare_db.sh                    # Script to set up databases (e.g., run init scripts for data pre-requisites)
-│   ├── run_allure_report.sh             # Script to serve allure reports locally for CLI-based execution
+│   ├── run_report.sh                    # Script to serve reports locally for CLI-based execution
 │   └── run_web_ui.sh                    # Script to serve test execution dashboard for web-based execution (Phase 4)
 │
 ├── logs/                                # Logging for better debug (Phase 3)

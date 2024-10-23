@@ -11,9 +11,8 @@ import (
 
 // Config structure holds all the configuration from the config.json file
 type Config struct {
-	DB     DatabaseConfig `json:"db"`
-	API    APIConfig      `json:"api"`
-	Allure AllureConfig   `json:"allure"`
+	DB  DatabaseConfig `json:"db"`
+	API APIConfig      `json:"api"`
 }
 
 // DatabaseConfig holds the database-specific configuration
@@ -29,12 +28,6 @@ type APIConfig struct {
 	ApiUser string `json:"api_user"`
 	ApiPass string `json:"api_pass"`
 	Timeout int    `json:"timeout"`
-}
-
-// AllureConfig holds Allure-related settings
-type AllureConfig struct {
-	Enable     bool   `json:"enable"`
-	ResultsDir string `json:"results_directory"`
 }
 
 var config *Config
@@ -75,9 +68,6 @@ func LoadConfig() (*Config, error) {
 	if apiPass := os.Getenv("API_PASS"); apiPass != "" {
 		config.API.ApiPass = apiPass
 	}
-	if allureDir := os.Getenv("ALLURE_RESULTS_DIRECTORY"); allureDir != "" {
-		config.Allure.ResultsDir = allureDir
-	}
 
 	return config, nil
 }
@@ -101,8 +91,6 @@ func GetEnv(key string) string {
 		return cfg.API.ApiUser
 	case "API_PASS":
 		return cfg.API.ApiPass
-	case "ALLURE_RESULTS_DIRECTORY":
-		return cfg.Allure.ResultsDir
 	default:
 		// If not found in config, return from environment variables or empty string if not set
 		value := os.Getenv(key)
