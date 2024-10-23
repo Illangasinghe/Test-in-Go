@@ -110,9 +110,10 @@ Here’s a brief explanation of the key directories relevant to getting started 
 
 Once you have your environment set up and you've run your first tests, you can explore additional functionality:
 
-- **Writing Tests**: Learn how to write effective BDD tests by following the Gherkin test conventions in `docs/naming_conventions.md`.
-- **Database Setup**: Configure supported databases (e.g., PostgreSQL) by referring to `[docs/database_setup.md](./database_setup.md)`.
-- **Contributing**: If you wish to contribute to this framework, check the guidelines in `docs/contribution.md`.
+- **Going Forward**: Continue expanding your test suite and follow best practices for maintainability by reading the [`Going Forward Guide`](./going_forward.md).
+- **Writing Tests**: Learn how to write effective BDD tests by following the Gherkin test conventions in [`Naming Conventions`](./naming_conventions.md).
+- **Database Setup**: Configure your SQL or NoSQL databases (e.g., PostgreSQL, MySQL) by referring to the [`Database Setup Guide`](./database_setup.md).
+- **Contributing**: If you wish to contribute to this framework, check the guidelines in [`Contribution Guide`](./contribution.md).
 
 ## Troubleshooting
 
