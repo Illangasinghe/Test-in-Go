@@ -8,11 +8,8 @@ require (
 	github.com/cucumber/godog v0.14.1
 	github.com/google/uuid v1.3.0
 	github.com/lib/pq v1.10.9
-	github.com/ozontech/allure-go/pkg/allure v0.6.13
 	github.com/sirupsen/logrus v1.9.3
 )
-
-require github.com/pkg/errors v0.9.1 // indirect
 
 require (
 	github.com/cucumber/gherkin/go/v26 v26.2.0 // indirect

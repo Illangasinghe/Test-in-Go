@@ -25,3 +25,15 @@ var (
 	DefaultSecure             = true
 	DefaultCatchWeight        = true
 )
+
+// Default values for reporting
+var (
+	TotalSteps       int = 0
+	PassedSteps      int = 0
+	FailedSteps      int = 0
+	SkippedSteps     int = 0
+	TotalScenarios   int = 0
+	PassedScenarios  int = 0
+	FailedScenarios  int = 0
+	SkippedScenarios int = 0
+)

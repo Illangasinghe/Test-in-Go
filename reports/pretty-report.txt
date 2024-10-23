@@ -1,0 +1,12 @@
+SCENARIO: Create a product using dynamic TestCode | STATUS: Started
+STEP: Define a new test case with dynamic TestCode | STATUS: Started | DETAILS: Testcase ID: 110-010-001
+STEP: Define a new test case with dynamic TestCode | STATUS: Passed | DETAILS: TestCode generated successfully
+STEP: Create product with dynamic TestCode | STATUS: Started | DETAILS: Description: Test Product
+STEP: Create product with dynamic TestCode | STATUS: Passed | DETAILS: Product created successfully with ID PRD-5001
+STEP: Validate product creation in the database | STATUS: Started | DETAILS: Expected Description: Test Product
+STEP: Validate product creation in the database | STATUS: Passed | DETAILS: Product validation successful. Description: Test Product
+SCENARIO: Create a product using dynamic TestCode | STATUS: Passed
+
+--- FINAL REPORT ---
+TOTAL STEPS: 3 | PASSED: 3 | FAILED: 0 | SKIPPED: 0
+TOTAL SCENARIOS: 1 | PASSED: 1 | FAILED: 0 | SKIPPED: 0

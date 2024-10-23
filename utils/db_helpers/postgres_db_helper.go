@@ -39,3 +39,13 @@ func ClosePostgres() error {
 	}
 	return nil
 }
+
+// QueryDatabase abstracts the logic of querying the database.
+func QueryDatabase(query, id string) (string, error) {
+	var dbValue string
+	err := DB.QueryRow(query, id).Scan(&dbValue)
+	if err != nil {
+		return "", fmt.Errorf("database query failed: %v", err)
+	}
+	return dbValue, nil
+}

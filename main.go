@@ -1,17 +1,14 @@
 package main
 
 import (
-	// "log"
 	"os"
 	"test-in-go/config"
 	"test-in-go/steps/inbound"
 	"test-in-go/utils/db_helpers"
 	"test-in-go/utils/logging_helpers"
-
-	// "testing"
+	"test-in-go/utils/report_helpers"
 
 	"github.com/cucumber/godog"
-	// "github.com/ozontech/allure-go/pkg/allure"
 	"github.com/sirupsen/logrus"
 )
 
@@ -21,6 +18,13 @@ func main() {
 
 	// Set up logger
 	logger = logging_helpers.SetupLogger()
+
+	// Initialize the pretty report
+	err := report_helpers.InitPrettyReport()
+	if err != nil {
+		logger.Fatal("Error initializing pretty report: ", err)
+		os.Exit(1)
+	}
 
 	// Set up the database connection
 	cfg, err := config.LoadConfig()
@@ -40,6 +44,12 @@ func main() {
 	// Run the test suite
 	status := runGodogTests()
 
+	// Finalize the report without passing parameters
+	err = report_helpers.FinalizePrettyReport()
+	if err != nil {
+		logger.Error("Error finalizing the report: ", err)
+	}
+
 	// Exit with appropriate status code
 	if status != 0 {
 		logger.Error("Test suite failed.")
@@ -50,7 +60,6 @@ func main() {
 }
 
 func runGodogTests() int {
-	// Godog test options
 	opts := godog.Options{
 		Format: "pretty",
 		Paths:  []string{"./features/inbound/product_creation.feature"},
