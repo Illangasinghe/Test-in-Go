@@ -111,7 +111,7 @@ Here’s a brief explanation of the key directories relevant to getting started 
 Once you have your environment set up and you've run your first tests, you can explore additional functionality:
 
 - **Writing Tests**: Learn how to write effective BDD tests by following the Gherkin test conventions in `docs/naming_conventions.md`.
-- **Database Setup**: Configure supported databases (e.g., PostgreSQL) by referring to `docs/database_setup.md`.
+- **Database Setup**: Configure supported databases (e.g., PostgreSQL) by referring to `[docs/database_setup.md](./database_setup.md)`.
 - **Contributing**: If you wish to contribute to this framework, check the guidelines in `docs/contribution.md`.
 
 ## Troubleshooting
@@ -125,11 +125,11 @@ Once you have your environment set up and you've run your first tests, you can e
 To explore further details and specific guides, refer to the following documentation:
 
 - **[README.md](../README.md)**: The main documentation file in the root directory, providing an overview of the framework, installation steps, and key features.
-- **[Contribution Guide](docs/contribution.md)**: Guidelines on how to contribute to the project, including adding new features, bug fixes, and best practices.
-- **[Database Setup](docs/database_setup.md)**: Instructions for configuring and setting up supported databases, such as PostgreSQL and MySQL, for testing purposes.
-- **[Naming Conventions](docs/naming_conventions.md)**: Detailed guidelines for writing and organizing test scenarios and feature files following the Gherkin format.
-- **[Priorities](docs/priorities.md)**: Insights into the development priorities and roadmap for future improvements to the framework.
-- **[Change Log](docs/change_log.md)**: (Coming soon) A record of changes, updates, and new features introduced in each version of the framework.
+- **[Contribution Guide](./contribution.md)**: Guidelines on how to contribute to the project, including adding new features, bug fixes, and best practices.
+- **[Database Setup](./database_setup.md)**: Instructions for configuring and setting up supported databases, such as PostgreSQL and MySQL, for testing purposes.
+- **[Naming Conventions](./naming_conventions.md)**: Detailed guidelines for writing and organizing test scenarios and feature files following the Gherkin format.
+- **[Priorities](./priorities.md)**: Insights into the development priorities and roadmap for future improvements to the framework.
+- **[Change Log](./change_log.md)**: (Coming soon) A record of changes, updates, and new features introduced in each version of the framework.
 
 For further details and advanced usage, refer to the full documentation in the `/docs` directory.
 
